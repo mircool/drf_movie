@@ -15,7 +15,6 @@ from pathlib import Path
 # 使用BASE_DIR构建项目内的路径，例如：BASE_DIR / 'subdir'。
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # 快速启动开发设置 - 不适合生产
 # 有关部署的更多信息，请参阅
 # https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -28,16 +27,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # 应用定义
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.admin',  # 管理员
+    'django.contrib.auth',  # 认证
+    'django.contrib.contenttypes',  # 内容类型
+    'django.contrib.sessions',  # 会话
+    'django.contrib.messages',  # 消息
+    'django.contrib.staticfiles',  # 静态文件
+    'movie',  # 电影应用
 ]
 
 MIDDLEWARE = [
@@ -70,7 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # 数据库
 # 有关数据库的更多信息，请参阅
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -81,7 +79,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # 密码验证
 # 有关密码验证的更多信息，请参阅
@@ -102,7 +99,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # 国际化
 # 有关国际化的更多信息，请参阅
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -114,7 +110,6 @@ TIME_ZONE = 'Asia/Shanghai'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # 静态文件（CSS、JavaScript、图像）
 # 有关静态文件的更多信息，请参阅
