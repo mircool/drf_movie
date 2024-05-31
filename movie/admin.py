@@ -11,8 +11,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class MovieAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'release_year', 'director', 'scriptwriter', 'actors', 'region']
-    search_fields = ['name', 'category', 'release_year', 'director', 'scriptwriter', 'actors', 'region']
-    list_filter = [ 'category', 'release_year', 'director', 'scriptwriter', 'actors', 'region']
+    search_fields = ['name']
+    list_filter = ['category', 'release_year', 'director', 'scriptwriter', 'actors', 'region']
 
 
 admin.site.register(Category, CategoryAdmin)
