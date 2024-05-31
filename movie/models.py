@@ -61,7 +61,7 @@ class Movie(models.Model):
     types = models.CharField(max_length=100, verbose_name="类型")
     language = models.CharField(max_length=100, verbose_name="语言")
     release_date = models.DateField(verbose_name="上映日期")
-    duration = models.IntegerField(verbose_name="片长")
+    duration = models.CharField(max_length=100, verbose_name="片长")
     alternate_name = models.CharField(max_length=100, verbose_name="又名")
     image_url = models.URLField(verbose_name="海报链接")
     rate = models.FloatField(verbose_name="评分")

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',  # 会话
     'django.contrib.messages',  # 消息
     'django.contrib.staticfiles',  # 静态文件
+    'rest_framework',  # REST框架
     'movie',  # 电影应用
 ]
 
