@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',  # 消息
     'django.contrib.staticfiles',  # 静态文件
     'rest_framework',  # REST框架
+    'django_filters',  # 过滤器
     'movie',  # 电影应用
 ]
 
@@ -134,4 +135,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 12,
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }

@@ -1,3 +1,4 @@
+from django_filters import rest_framework as filters
 from rest_framework import viewsets
 
 from .models import Movie
@@ -54,6 +55,16 @@ from .serializers import MovieSerializer
 #     serializer_class = MovieDetailSerializer
 
 
+class MovieFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='icontains')
+
+    class Meta:
+        model = Movie
+        fields = ['name']
+
+
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+    filter_backends = (filters.DjangoFilterBackend,)  # 过滤器后端
+    filterset_class = MovieFilter
