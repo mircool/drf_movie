@@ -1,7 +1,7 @@
-from rest_framework import generics
+from rest_framework import viewsets
 
 from .models import Movie
-from .serializers import MovieDetailSerializer, MovieListSerializer
+from .serializers import MovieSerializer
 
 
 # @api_view(['GET', 'POST'])
@@ -44,11 +44,16 @@ from .serializers import MovieDetailSerializer, MovieListSerializer
 #         movie.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class MovieList(generics.ListCreateAPIView):
-    queryset = Movie.objects.all()
-    serializer_class = MovieListSerializer
+# class MovieList(generics.ListCreateAPIView):
+#     queryset = Movie.objects.all()
+#     serializer_class = MovieListSerializer
+#
+#
+# class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Movie.objects.all()
+#     serializer_class = MovieDetailSerializer
 
 
-class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
+class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
-    serializer_class = MovieDetailSerializer
+    serializer_class = MovieSerializer
