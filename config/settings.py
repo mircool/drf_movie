@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',  # 消息
     'django.contrib.staticfiles',  # 静态文件
     'rest_framework',  # REST框架
+    'djoser',  # 用户认证
     'django_filters',  # 过滤器
     'movie',  # 电影应用
 ]
@@ -137,3 +138,23 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 12,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
+
+# DJOSER配置字典，用于配置Djoser库的行为。
+DJOSER = {
+    'USER_ID_FIELD': 'username',  # 用户ID字段
+    'LOGIN_FIELD': 'email',  # 默认为'email'。
+    'SEND_ACTIVATION_EMAIL': True,  # 是否发送激活邮件
+    'ACTIVATION_URL': 'activate/{uid}/{token}',  # 激活链接
+    'SEND_CONFIRMATION_EMAIL': True,  # 是否发送确认邮件
+}
+
+# 配置邮箱
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.vip.163.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'ynyjyz.kust@vip.163.com'
+EMAIL_HOST_PASSWORD = 'QBLJMYIAQPZXGHPX'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
