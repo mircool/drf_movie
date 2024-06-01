@@ -147,8 +147,8 @@ DJOSER = {
     'SEND_ACTIVATION_EMAIL': True,  # 是否发送激活邮件
     'ACTIVATION_URL': 'activate/{uid}/{token}',  # 激活链接
     'SEND_CONFIRMATION_EMAIL': True,  # 是否发送确认邮件
-    'SERIALIZERS': {    # 序列化器
-        'user_create': 'account.serializers.CustomUserCreateSerializer',    # 用户创建序列化器
+    'SERIALIZERS': {  # 序列化器
+        'user_create': 'account.serializers.CustomUserCreateSerializer',  # 用户创建序列化器
     },
 }
 
@@ -159,3 +159,6 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = 'ynyjyz.kust@vip.163.com'
 EMAIL_HOST_PASSWORD = 'QBLJMYIAQPZXGHPX'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# CSRF信任的源
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', ]
