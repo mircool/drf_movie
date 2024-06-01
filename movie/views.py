@@ -60,7 +60,7 @@ class MovieFilter(filters.FilterSet):
 
     class Meta:
         model = Movie
-        fields = ['name', 'category', 'region']
+        fields = ['category', 'region']
 
 
 class MovieViewSet(viewsets.ModelViewSet):
