@@ -138,6 +138,15 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 12,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+# JWT设置
+SIMPLE_JWT = {
+    'ACCESS_HEADER_TYPE': ('JWT',),
+    'REFRESH_HEADER_TYPE': ('JWT',),
 }
 
 # DJOSER配置字典，用于配置Djoser库的行为。
