@@ -161,6 +161,8 @@ DJOSER = {
     'SERIALIZERS': {  # 序列化器
         'user_create': 'account.serializers.CustomUserCreateSerializer',  # 用户创建序列化器
     },
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,  # 是否显示未找到电子邮件
+    'PASSWORD_RESET_CONFIRM_URL': 'password/{uid}/{token}',  # 重置密码确认链接
 }
 
 # 配置邮箱
