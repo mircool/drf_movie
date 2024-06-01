@@ -1,8 +1,8 @@
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
 
-from .models import Movie
-from .serializers import MovieSerializer
+from .models import Category, Movie
+from .serializers import CategorySerializer, MovieSerializer
 
 
 # @api_view(['GET', 'POST'])
@@ -56,11 +56,11 @@ from .serializers import MovieSerializer
 
 
 class MovieFilter(filters.FilterSet):
-    name = filters.CharFilter(field_name='name', lookup_expr='icontains')
+    name = filters.CharFilter(field_name='name', lookup_expr='icontains')  # 过滤名称
 
     class Meta:
         model = Movie
-        fields = ['name']
+        fields = ['name', 'category', 'region']
 
 
 class MovieViewSet(viewsets.ModelViewSet):
@@ -68,3 +68,8 @@ class MovieViewSet(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
     filter_backends = (filters.DjangoFilterBackend,)  # 过滤器后端
     filterset_class = MovieFilter
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
