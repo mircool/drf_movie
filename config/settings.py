@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 有关设置的完整列表及其值，请参阅
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # 使用BASE_DIR构建项目内的路径，例如：BASE_DIR / 'subdir'。
@@ -147,6 +147,8 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_HEADER_TYPE': ('JWT',),
     'REFRESH_HEADER_TYPE': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
 # DJOSER配置字典，用于配置Djoser库的行为。
