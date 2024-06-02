@@ -22,4 +22,5 @@ urlpatterns = [
     path('api/', include('movie.urls'), name='movie'),
     path('api/', include('djoser.urls'), name='djoser'),
     path('api/', include('djoser.urls.jwt'), name='djoser-jwt'),
+    path('api/', include('account.urls'), name='account'),
 ]

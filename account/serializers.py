@@ -3,6 +3,7 @@ from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from movie.serializers import MovieSerializer
 from .models import Profile
 
 User = get_user_model()
@@ -30,3 +31,12 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         profile.save()
 
         return user
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    # 显示收藏的电影对象，id 和 name 字段
+    movies = MovieSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ['uid', 'user', 'movies']
