@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_filters',  # 过滤器
     'movie',  # 电影应用
     'account',  # 用户应用
+    'trade',  # 交易应用
 ]
 
 MIDDLEWARE = [
@@ -51,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',    # 国际化
+    'django.middleware.locale.LocaleMiddleware',  # 国际化
 ]
 
 ROOT_URLCONF = 'config.urls'
