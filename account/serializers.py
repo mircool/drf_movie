@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model
-from djoser.serializers import UserCreateSerializer
+from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from movie.serializers import MovieSerializer
 from .models import Profile
 
 User = get_user_model()
@@ -34,9 +33,13 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    # 显示收藏的电影对象，id 和 name 字段
-    movies = MovieSerializer(many=True, read_only=True)
-
     class Meta:
         model = Profile
-        fields = ['uid', 'user', 'movies']
+        fields = ['uid', 'user', 'movies', 'avatar', 'is_upgrade', 'expire_time']
+
+
+class CustomUserSerializer(UserSerializer):
+    profile = ProfileSerializer(read_only=True)  # 嵌套Profile序列化器
+
+    class Meta(UserSerializer.Meta):
+        fields = (*UserSerializer.Meta.fields, 'profile')
