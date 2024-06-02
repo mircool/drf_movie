@@ -3,6 +3,8 @@ from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from .models import Profile
+
 User = get_user_model()
 
 
@@ -17,3 +19,14 @@ class CustomUserCreateSerializer(UserCreateSerializer):
     email = serializers.EmailField(  # 邮箱字段
         validators=[CustomUniqueValidator(queryset=User.objects.all())]  # 唯一性验证器
     )
+
+    class Meta(UserCreateSerializer.Meta):
+        fields = ['id', 'username', 'email', 'password']
+
+    def create(self, validated_data):
+        user = super().create(validated_data)
+        # 写入profile
+        profile = Profile.objects.create(user=user)
+        profile.save()
+
+        return user
