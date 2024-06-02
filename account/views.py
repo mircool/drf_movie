@@ -1,6 +1,7 @@
 from django.http import Http404
 from rest_framework import status, viewsets
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -74,3 +75,22 @@ class CollectViewSet(viewsets.ModelViewSet):
         serializer = MovieSerializer(movies, many=True)
 
         return Response(serializer.data)
+
+    @action(detail=True, methods=['GET'])
+    def is_collected(self, request, pk=None):
+        user = request.user
+        profile, _ = Profile.objects.get_or_create(user=user)
+
+        try:
+            movie_id = int(pk)
+        except ValueError:
+            raise ValidationError({'message': '电影ID必须是整数'})
+
+        try:
+            movie = Movie.objects.get(id=movie_id)
+        except Movie.DoesNotExist:
+            raise Http404("电影不存在")
+
+        is_collected = movie in profile.movies.all()
+
+        return Response({'is_collected': is_collected})
