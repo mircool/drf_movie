@@ -145,8 +145,6 @@ REST_FRAMEWORK = {
 
 # JWT设置
 SIMPLE_JWT = {
-    'ACCESS_HEADER_TYPE': ('JWT',),
-    'REFRESH_HEADER_TYPE': ('JWT',),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
@@ -163,6 +161,7 @@ DJOSER = {
     },
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,  # 是否显示未找到电子邮件
     'PASSWORD_RESET_CONFIRM_URL': 'password/{uid}/{token}',  # 重置密码确认链接
+    'SET_PASSWORD_RETYPE': True,  # 是否重新输入密码
 }
 
 # 配置邮箱
