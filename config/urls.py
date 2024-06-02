@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/', include('djoser.urls'), name='djoser'),
     path('api/', include('djoser.urls.jwt'), name='djoser-jwt'),
     path('api/', include('account.urls'), name='account'),
+    path('api/', include('trade.urls'), name='trade'),
 ]

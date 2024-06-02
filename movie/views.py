@@ -1,10 +1,8 @@
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny, IsAuthenticatedOrReadOnly
 
 from .models import Category, Movie
-from .permissions import IsAdminUserOrReadOnly
+from config.permissions import IsAdminUserOrReadOnly
 from .serializers import CategorySerializer, MovieSerializer
 
 
