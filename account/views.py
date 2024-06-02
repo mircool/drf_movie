@@ -1,14 +1,14 @@
 from django.http import Http404
 from rest_framework import status, viewsets
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from movie.models import Movie
 from movie.serializers import MovieSerializer
+from utils.error import MovieError, response_data
 from .models import Profile
 
 
@@ -16,8 +16,13 @@ from .models import Profile
 class CollectViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = MovieSerializer
-    authentication_classes = [JWTAuthentication, SessionAuthentication, TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method in ['PUT', 'PATCH']:  # 只有管理员可以修改
+            return [IsAdminUser()]
+        return [IsAuthenticated()]
 
     def create(self, request, *args, **kwargs):
         user = request.user
@@ -61,7 +66,7 @@ class CollectViewSet(viewsets.ModelViewSet):
 
         # 判断是否收藏了该电影
         if movie not in profile.movies.all():
-            raise ValidationError({'message': '未收藏该电影'})
+            return Response(response_data(*MovieError.MovieNotFound))
 
         profile.movies.remove(movie)
 

@@ -1,7 +1,10 @@
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny, IsAuthenticatedOrReadOnly
 
 from .models import Category, Movie
+from .permissions import IsAdminUserOrReadOnly
 from .serializers import CategorySerializer, MovieSerializer
 
 
@@ -68,8 +71,10 @@ class MovieViewSet(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
     filter_backends = (filters.DjangoFilterBackend,)  # 过滤器后端
     filterset_class = MovieFilter
+    permission_classes = [IsAdminUserOrReadOnly]
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUserOrReadOnly]
