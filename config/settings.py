@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q$=&&&7e)-*9$(94#+@y^n1c5%)3bkx+dww1jv*-^osomo#f^&
 # 安全性警告：不要在生产中开启调试模式！
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # 应用定义
 

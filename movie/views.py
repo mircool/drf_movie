@@ -1,8 +1,9 @@
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
 
+from utils.permissions import IsAdminUserOrReadOnly
+from utils.filters import MovieFilter
 from .models import Category, Movie
-from config.permissions import IsAdminUserOrReadOnly
 from .serializers import CategorySerializer, MovieSerializer
 
 
@@ -54,14 +55,6 @@ from .serializers import CategorySerializer, MovieSerializer
 # class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
 #     queryset = Movie.objects.all()
 #     serializer_class = MovieDetailSerializer
-
-
-class MovieFilter(filters.FilterSet):
-    name = filters.CharFilter(field_name='name', lookup_expr='icontains')  # 过滤名称
-
-    class Meta:
-        model = Movie
-        fields = ['category', 'region']
 
 
 class MovieViewSet(viewsets.ModelViewSet):

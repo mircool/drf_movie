@@ -1,6 +1,6 @@
 from django.db import models
 
-from config.models import BaseModel
+from utils.models import BaseModel
 
 
 class Card(BaseModel):

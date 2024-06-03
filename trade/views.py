@@ -9,11 +9,12 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from account.models import Profile
 from config import settings
-from config.permissions import IsAdminUserOrReadOnly
+from utils.permissions import IsAdminUserOrReadOnly
 from trade.models import Card, Order
-from trade.serializers import CardSerializer
+from trade.serializers import CardSerializer, OrderSerializer
 from utils.common import get_random_code
 from utils.error import Trade, response_data
+from utils.filters import OrderFilter
 from utils.zhifubao import AliPay, logger
 
 
@@ -139,3 +140,41 @@ class AlipayCallbackView(APIView):
             print(e)
             logger.error(f"An unexpected error occurred: {e}")
             return Response('fail')
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    """
+    订单管理
+    """
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
+    filterset_class = OrderFilter
+
+    def get_queryset(self):
+        """
+        重写get_queryset方法，根据用户角色返回不同的数据
+        """
+        user = self.request.user
+        if user.is_superuser:
+            return Order.objects.all()
+        return Order.objects.filter(profile__user=user)
+
+    def get_permissions(self):
+        """
+        获取请求所需的权限列表。
+
+        如果请求方法是安全的方法（如GET、HEAD、OPTIONS），则只需认证即可；
+        如果请求方法不是安全的方法，则可能需要更多的权限检查。
+
+        返回:
+            一个包含权限类的列表。对于安全的方法，列表中只有一个权限类IsAuthenticated，
+            它要求用户必须通过身份验证才能访问资源。
+        """
+        # 检查请求方法是否属于安全的方法集合
+        if self.request.method in permissions.SAFE_METHODS:
+            # 对于安全的方法，返回一个仅包含认证权限的列表
+            return [permissions.IsAuthenticated()]
+        else:
+            # 对于非安全的方法，返回一个包含认证和自定义权限的列表
+            return [permissions.IsAdminUser()]
