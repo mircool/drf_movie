@@ -6,6 +6,7 @@ from alipay.aop.api.AlipayClientConfig import AlipayClientConfig
 from alipay.aop.api.DefaultAlipayClient import DefaultAlipayClient
 from alipay.aop.api.domain.AlipayTradePagePayModel import AlipayTradePagePayModel
 from alipay.aop.api.request.AlipayTradePagePayRequest import AlipayTradePagePayRequest
+from alipay.aop.api.util.SignatureUtils import verify_with_rsa
 
 from config import settings
 
@@ -53,3 +54,10 @@ class AliPay:
         response = self.client.page_execute(request, http_method="GET")
         print('response:', response)
         return response
+
+    def verify(self, unsigned_string, sign):
+        """
+        验证签名
+        """
+        return verify_with_rsa(public_key=self.alipay_client_config.alipay_public_key,
+                               message=bytes(unsigned_string, 'utf-8'), sign=sign)
