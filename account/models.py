@@ -1,8 +1,6 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.db import models
 from shortuuidfield import ShortUUIDField
-
-User = get_user_model()
 
 
 class Profile(models.Model):
@@ -18,10 +16,8 @@ class Profile(models.Model):
     upgrade_time = models.DateTimeField(blank=True, null=True, verbose_name='升级时间', help_text='升级时间')
     expire_time = models.DateTimeField(blank=True, null=True, verbose_name='到期时间', help_text='到期时间')
     upgrade_count = models.IntegerField(default=0, verbose_name='升级次数', help_text='升级次数')
-
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', verbose_name='用户',
                                 help_text='用户')
-
     movies = models.ManyToManyField('movie.Movie', related_name='profiles', blank=True, verbose_name='收藏电影',
                                     help_text='收藏电影')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间', help_text='创建时间')

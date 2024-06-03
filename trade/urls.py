@@ -1,3 +1,4 @@
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from . import views
@@ -8,4 +9,5 @@ router.register('cards', views.CardViewSet, basename='card')
 
 urlpatterns = [
     *router.urls,
+    path('alipay/', views.AlipayApiView.as_view(), name='alipay'),
 ]

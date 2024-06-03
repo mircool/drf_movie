@@ -42,7 +42,8 @@ class Order(BaseModel):
     pay_status = models.CharField(max_length=20, choices=ORDER_STATUS, default='WAIT_BUYER_PAY',
                                   verbose_name='支付状态',
                                   help_text='支付状态')
-    pay_type = models.CharField(max_length=20, choices=PAY_TYPE, verbose_name='支付类型', help_text='支付类型')
+    pay_type = models.CharField(max_length=20, choices=PAY_TYPE, default='ALIPAY', verbose_name='支付类型',
+                                help_text='支付类型')
     order_mount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='订单金额', help_text='订单金额')
     pay_time = models.DateTimeField(null=True, blank=True, verbose_name='支付时间', help_text='支付时间')
 

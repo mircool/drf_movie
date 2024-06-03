@@ -6,7 +6,8 @@ from alipay.aop.api.AlipayClientConfig import AlipayClientConfig
 from alipay.aop.api.DefaultAlipayClient import DefaultAlipayClient
 from alipay.aop.api.domain.AlipayTradePagePayModel import AlipayTradePagePayModel
 from alipay.aop.api.request.AlipayTradePagePayRequest import AlipayTradePagePayRequest
-from django.conf import settings
+
+from config import settings
 
 logging.basicConfig(
     level=logging.INFO,
@@ -22,11 +23,11 @@ class AliPay:
     """
     设置配置，包括支付宝网关地址、app_id、应用私钥、支付宝公钥等，其他配置值可以查看AlipayClientConfig的定义。
     """
-    alipay_client_config = AlipayClientConfig() # 实例化一个配置对象
-    alipay_client_config.server_url = settings.ALIPAY.get('server_url') # 支付宝网关地址
-    alipay_client_config.app_id = settings.ALIPAY.get('app_id') # app_id
-    alipay_client_config.app_private_key = settings.ALIPAY.get('app_private_key')   # 应用私钥
-    alipay_client_config.alipay_public_key = settings.ALIPAY.get('alipay_public_key')   # 支付宝公钥
+    alipay_client_config = AlipayClientConfig()  # 实例化一个配置对象
+    alipay_client_config.server_url = settings.ALIPAY.get('server_url')  # 支付宝网关地址
+    alipay_client_config.app_id = settings.ALIPAY.get('app_id')  # app_id
+    alipay_client_config.app_private_key = settings.ALIPAY.get('app_private_key')  # 应用私钥
+    alipay_client_config.alipay_public_key = settings.ALIPAY.get('alipay_public_key')  # 支付宝公钥
 
     def __init__(self):
         """
@@ -50,4 +51,5 @@ class AliPay:
         request = AlipayTradePagePayRequest(biz_model=model)
         # 得到构造的请求，如果http_method是GET，则是一个带完成请求参数的url，如果http_method是POST，则是一段HTML表单片段
         response = self.client.page_execute(request, http_method="GET")
+        print('response:', response)
         return response

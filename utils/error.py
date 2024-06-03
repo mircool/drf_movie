@@ -27,3 +27,11 @@ class UserError:
     UserDeleteError = (2004, '用户信息删除失败')
     UserListError = (2005, '用户信息列表获取失败')
     UserListEmpty = (2006, '用户信息列表为空')
+
+
+class Trade:
+    CardParamError = (3000, '参数错误')
+    OrderCreateError = (3001, '订单创建失败')
+    PayrequestError = (3002, '支付请求失败')
+    ProfileError = (3003, '用户信息不存在')
+    UnexpectedError = (3004, '未知错误')
