@@ -9,12 +9,12 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from account.models import Profile
 from config import settings
-from utils.permissions import IsAdminUserOrReadOnly
 from trade.models import Card, Order
 from trade.serializers import CardSerializer, OrderSerializer
 from utils.common import get_random_code
 from utils.error import Trade, response_data
 from utils.filters import OrderFilter
+from utils.permissions import IsAdminUserOrReadOnly
 from utils.zhifubao import AliPay, logger
 
 
@@ -49,21 +49,34 @@ class AlipayApiView(APIView):
         except Card.DoesNotExist:
             return Response(response_data(*Trade.CardParamError), status=status.HTTP_400_BAD_REQUEST)
 
-        # 创建支付宝订单
-        out_trade_no = 'pay' + datetime.now().strftime('%Y%m%d%H%M%S') + get_random_code(6)
-        product_code = 'FAST_INSTANT_TRADE_PAY'
+        order_sn = request.GET.get('order_sn', None)
+        if not order_sn:
+            # 创建支付宝订单
+            out_trade_no = 'pay' + datetime.now().strftime('%Y%m%d%H%M%S') + get_random_code(6)
+            product_code = 'FAST_INSTANT_TRADE_PAY'
 
-        try:
-            Order.objects.create(
-                profile=profile,
-                card=card,
-                order_sn=out_trade_no,
-                order_mount=card.card_price,
-                pay_time=timezone.now(),  # 支付时间
-            )
-        except Exception as e:
-            logger.error(f"An unexpected error occurred: {e}")
-            return Response(response_data(*Trade.OrderCreateError), status=status.HTTP_400_BAD_REQUEST)
+            try:
+                Order.objects.create(
+                    profile=profile,
+                    card=card,
+                    order_sn=out_trade_no,
+                    order_mount=card.card_price,
+                    pay_time=timezone.now(),  # 支付时间
+                )
+            except Exception as e:
+                logger.error(f"An unexpected error occurred: {e}")
+                return Response(response_data(*Trade.OrderCreateError), status=status.HTTP_400_BAD_REQUEST)
+        else:
+            # 查询订单
+            order = Order.objects.filter(order_sn=order_sn).first()
+            if not order:
+                return Response(response_data(*Trade.OrderNotExist), status=status.HTTP_400_BAD_REQUEST)
+            # 如果订单已支付，则返回支付成功
+            if order.pay_status in ['TRADE_SUCCESS', 'TRADE_FINISHED']:
+                return Response(response_data(message='支付成功'))
+            out_trade_no = order.order_sn
+            product_code = 'FAST_INSTANT_TRADE_PAY'
+
         # 请求支付
         try:
             alipay = AliPay()

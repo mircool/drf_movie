@@ -35,3 +35,4 @@ class Trade:
     PayrequestError = (3002, '支付请求失败')
     ProfileError = (3003, '用户信息不存在')
     UnexpectedError = (3004, '未知错误')
+    OrderNotExist = (3005, '订单不存在')

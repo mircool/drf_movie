@@ -24,7 +24,6 @@ class Order(BaseModel):
         ('WAIT_BUYER_PAY', '等待买家付款'),
         ('TRADE_FINISHED', '交易结束'),
         ('TRADE_FAIL', '交易失败'),
-        ('PAYING', '支付中'),
     )
 
     PAY_TYPE = (
@@ -50,6 +49,8 @@ class Order(BaseModel):
     class Meta:
         verbose_name = '订单'
         verbose_name_plural = verbose_name
+        # 排序
+        ordering = ('-created_at',)
 
     def __str__(self):
         return self.order_sn

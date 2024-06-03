@@ -10,6 +10,8 @@ class CardSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    card = CardSerializer()
+
     class Meta:
         model = Order
         fields = '__all__'
