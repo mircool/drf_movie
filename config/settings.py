@@ -188,3 +188,10 @@ ALIPAY = {
     'alipay_notify_url': 'http://7883abc2.r21.cpolar.top/api/callback/',  # 支付成功后异步通知的地址
     'alipay_seller_id': '2088721036835160',  # 卖家ID
 }
+
+# Celery配置
+CELERY_TIMEZONE = "Asia/Shanghai"  # 设置时区
+CELERY_TASK_TRACK_STARTED = True  # Celery任务启动时跟踪
+CELERY_TASK_TIME_LIMIT = 30 * 60  # Celery任务时间限制, 30分钟, 单位秒, 默认无限制
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Broker地址
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'  # 结果存储地址

@@ -12,4 +12,5 @@ urlpatterns = [
     *router.urls,
     path('alipay/', views.AlipayApiView.as_view(), name='alipay'),
     path('callback/', views.AlipayCallbackView.as_view(), name='callback'),
+    path('tasks/', views.TaskApiView.as_view(), name='tasks'),
 ]

@@ -16,6 +16,7 @@ from utils.error import Trade, response_data
 from utils.filters import OrderFilter
 from utils.permissions import IsAdminUserOrReadOnly
 from utils.zhifubao import AliPay, logger
+from .tasks import add, mul, xsum
 
 
 class CardViewSet(viewsets.ModelViewSet):
@@ -191,3 +192,18 @@ class OrderViewSet(viewsets.ModelViewSet):
         else:
             # 对于非安全的方法，返回一个包含认证和自定义权限的列表
             return [permissions.IsAdminUser()]
+
+
+class TaskApiView(APIView):
+    """
+    任务接口
+    """
+
+    def get(self, request):
+        result1 = add.delay(1, 2)
+        print('result1:', result1)
+        result2 = mul.delay(2, 3)
+        print('result2:', result2)
+        result3 = xsum.delay([1, 2, 3, 4, 5])
+        print('result3:', result3)
+        return Response('success')
