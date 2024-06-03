@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'movie',  # 电影应用
     'account',  # 用户应用
     'trade',  # 交易应用
+    'django_celery_beat',  # Celery定时任务
 ]
 
 MIDDLEWARE = [
